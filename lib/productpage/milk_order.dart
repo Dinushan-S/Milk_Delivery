@@ -3,13 +3,13 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:milky/const.dart';
-import 'package:milky/header_inner.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:milky/google_sign_in.dart';
 import 'package:milky/userDetails.dart';
-import 'package:number_inc_dec/number_inc_dec.dart';
 import 'package:milky/getcurrentlocation.dart';
+import 'package:provider/provider.dart';
 
 class MilkOrder extends StatefulWidget {
   const MilkOrder({Key? key}) : super(key: key);
@@ -74,7 +74,7 @@ class _MilkOrderState extends State<MilkOrder> {
               height: 300.0,
               decoration: const BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('assets/logo.png'),
+                  image: AssetImage('assets/header.png'),
                 ),
               ),
             ),
@@ -126,6 +126,14 @@ class _MilkOrderState extends State<MilkOrder> {
                   const SizedBox(
                     height: 10,
                   ),
+                  TextButton(
+                      onPressed: () {
+                        final provider = Provider.of<GoogleSigninProvider>(
+                            context,
+                            listen: false);
+                        provider.Logout();
+                      },
+                      child: Text('logout')),
                   Row(
                     children: [
                       Text(

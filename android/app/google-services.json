@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "369545156360",
+    "project_id": "milk-delivery-3a454",
+    "storage_bucket": "milk-delivery-3a454.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:369545156360:android:b0e7cf93f66d7671f27ebd",
+        "android_client_info": {
+          "package_name": "com.example.milky"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "369545156360-5qkecg513qrsckp73kmol6b87u939979.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3ut8uosKVOoQ_lloqaaZc5Xw2__NgQjw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "369545156360-5qkecg513qrsckp73kmol6b87u939979.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -11,7 +11,7 @@ class HeaderInner extends StatelessWidget {
       children: <Widget>[
         Expanded(
           child: Container(
-            child: Image.asset('assets/logo.png'),
+            child: Image.asset('assets/header.png'),
             decoration: const BoxDecoration(
               borderRadius:
                   BorderRadius.vertical(bottom: Radius.circular(20.0)),
