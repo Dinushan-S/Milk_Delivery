@@ -3,12 +3,10 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:milky/const.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:milky/google_sign_in.dart';
-import 'package:milky/userDetails.dart';
-import 'package:milky/getcurrentlocation.dart';
+import 'package:milky/login_screen/google_sign_in.dart';
+import 'package:milky/user_details/userDetails.dart';
+import 'package:milky/utils/getcurrentlocation.dart';
 import 'package:provider/provider.dart';
 
 class MilkOrder extends StatefulWidget {

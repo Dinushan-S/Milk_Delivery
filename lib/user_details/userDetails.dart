@@ -1,8 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:milky/const.dart';
-import 'package:milky/ReusableTextField.dart';
+import 'package:milky/utils/ReusableTextField.dart';
 
 class GetUserDetails extends StatefulWidget {
   const GetUserDetails({Key? key}) : super(key: key);
