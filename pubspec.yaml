@@ -21,6 +21,9 @@ dependencies:
   number_inc_dec: ^0.8.0
   geolocator: ^8.0.5
   loading_animation_widget: ^1.1.0+0
+  flutter_screenutil: ^5.3.1
+  fluttertoast: ^8.0.8
+  google_maps_flutter: ^2.1.1
 
   #google sign-in
   firebase_core: ^1.12.0
@@ -29,6 +32,10 @@ dependencies:
 
   # state management
   provider: ^5.0.0
+
+  firebase_database: ^9.0.6
+  cloud_firestore: ^3.1.7
+  keyboard_dismisser: ^2.0.0
 
 dev_dependencies:
   flutter_test:
