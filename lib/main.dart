@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:milky/login_screen/google_sign_in.dart';
-import 'package:milky/home_page/home_page.dart';
+import 'package:milky/screens/login_screen/google_sign_in.dart';
+import 'package:milky/screens/home_page/router_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         create: (context) => GoogleSigninProvider(),
         child: ScreenUtilInit(
           builder: () => MaterialApp(
-            home: HomePage(),
+            home: RouterPage(),
             debugShowCheckedModeBanner: false,
           ),
           designSize: const Size(360, 640),

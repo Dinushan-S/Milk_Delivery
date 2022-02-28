@@ -4,7 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:milky/productpage/milk_order.dart';
+import 'package:math_expressions/math_expressions.dart';
+import 'package:milky/screens/milk_screen/milk_order.dart';
 import 'package:milky/utils/ReusableTextField.dart';
 
 class OrderPage extends StatefulWidget {
@@ -47,13 +48,10 @@ class _OrderPageState extends State<OrderPage> {
 
   void initUser(dynamic data, dynamic count, dynamic price, dynamic distance) {
     name = data['name'];
-    // nameController.text = name;
     addressNum = data['addressNum'];
     addressLane = data['addressStreet'];
     addressArea = data['addressArea'];
-    // addressController.text = address;
     mobile = data['mobile'];
-    // mobileController.text = mobile;
     email = data['email'];
     milk = count.toString();
     milkPrice = price;
@@ -243,7 +241,6 @@ class _OrderPageState extends State<OrderPage> {
                   textAlign: TextAlign.left,
                   // maxLines: 2,
                   softWrap: true,
-                  // overflow: TextOverflow.fade,
                   style: const TextStyle(
                     fontSize: 16,
                   ),
@@ -307,11 +304,14 @@ class _OrderPageState extends State<OrderPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Padding(padding: EdgeInsets.only(left: 32)),
+                    Padding(padding: EdgeInsets.only(left: 10)),
                     Expanded(
                       child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
                         child: Image.asset(
-                          'assets/logo.png',
+                          'assets/milkbox.png',
                           height: 100,
                           width: 100,
                         ),
@@ -404,19 +404,17 @@ class _OrderPageState extends State<OrderPage> {
                           ),
                           scrollable: true,
                           title: Center(child: const Text('Confirm order')),
-                          content: AspectRatio(
-                            aspectRatio: 3 / 2,
-                            child: Container(
-                              width: double.infinity,
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Card(
+                          content: Container(
+                            width: double.infinity,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Card(
                                         elevation: 3,
                                         child: Image(
                                             image:
@@ -424,19 +422,21 @@ class _OrderPageState extends State<OrderPage> {
                                             height: 100,
                                             width: 100),
                                       ),
-                                      SizedBox(
-                                        width: 20,
-                                      ),
-                                      Text(
+                                    ),
+                                    SizedBox(
+                                      width: 20,
+                                    ),
+                                    Expanded(
+                                      child: Text(
                                         '$milk Liter Milk',
                                         style: TextStyle(
                                           fontSize: 20,
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                ],
-                              ),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
                           actions: [
@@ -455,22 +455,43 @@ class _OrderPageState extends State<OrderPage> {
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                               ),
-                              onPressed: () {
+                              onPressed: () async {
                                 final user = FirebaseAuth.instance.currentUser!;
+                                final db = FirebaseDatabase(
+                                        databaseURL:
+                                            "https://milk-delivery-3a454-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                                    .ref();
+
+                                final root = FirebaseDatabase.instance.refFromURL(
+                                    "https://milk-delivery-3a454-default-rtdb.asia-southeast1.firebasedatabase.app/");
+                                // .child("/order");
 
                                 CollectionReference collection =
                                     FirebaseFirestore.instance
                                         .collection('orderdata');
+                                try {
+                                  // await collection.doc(user.uid).set(
+                                  //   {
+                                  //     'milkUnit': milk,
+                                  //     'sub_price': milkPrice,
+                                  //     'distance': dis,
+                                  //     'shipping_cost': 100,
+                                  //     'total-amount': 200,
+                                  //   },
+                                  // );
 
-                                collection.doc(user.uid).set(
-                                  {
+                                  await db.child('orders').push().set({
+                                    'user_mail': user.email,
                                     'milkUnit': milk,
                                     'sub_price': milkPrice,
                                     'distance': dis,
                                     'shipping_cost': 100,
                                     'total-amount': 200,
-                                  },
-                                );
+                                  }).then((value) => print('done'));
+                                } catch (e) {
+                                  print("not work");
+                                }
+
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -479,7 +500,6 @@ class _OrderPageState extends State<OrderPage> {
                                     },
                                   ),
                                 );
-                                ;
                               },
                             )
                           ],

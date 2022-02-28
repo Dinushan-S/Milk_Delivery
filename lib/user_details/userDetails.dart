@@ -3,7 +3,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:milky/productpage/milk_order.dart';
+import 'package:milky/screens/milk_screen/milk_order.dart';
+import 'package:milky/screens/milk_screen/widget/show_toast.dart';
 import 'package:milky/user_details/get_user_data.dart';
 import 'package:milky/utils/ReusableTextField.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -24,7 +25,6 @@ class _GetUserDetailsState extends State<GetUserDetails> {
   late String userAddressArea;
   late String userMobile;
   late List userDetails;
-  late FToast fToast;
   late final CameraPosition _cameraPosition;
 
   CollectionReference users =
@@ -36,49 +36,17 @@ class _GetUserDetailsState extends State<GetUserDetails> {
       addressAreaController,
       mobileController;
 
-  late DatabaseReference _ref;
   @override
   void initState() {
     super.initState();
-    fToast = FToast();
-    fToast.init(context);
 
     _cameraPosition = CameraPosition(target: LatLng(0, 0), zoom: 10.0);
-
-    _ref = FirebaseDatabase.instance.ref().child('userdata');
 
     nameController = TextEditingController();
     addressNumController = TextEditingController();
     addressStreetController = TextEditingController();
     addressAreaController = TextEditingController();
     mobileController = TextEditingController();
-  }
-
-  _showToast() {
-    Widget toast = Container(
-      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(25.0),
-        color: Colors.black54,
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: const [
-          Text(
-            "Fill the details",
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-        ],
-      ),
-    );
-
-    fToast.showToast(
-      child: toast,
-      gravity: ToastGravity.BOTTOM,
-      toastDuration: Duration(seconds: 2),
-    );
   }
 
   Widget build(BuildContext context) {
@@ -145,16 +113,16 @@ class _GetUserDetailsState extends State<GetUserDetails> {
                 SizedBox(
                   height: 32,
                 ),
-                TextField(
-                  controller: addressAreaController,
-                  onTap: () => {},
-                  decoration: InputDecoration(
-                    hintText: 'Enter area',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ),
+                // TextField(
+                //   controller: addressAreaController,
+                //   onTap: () => {},
+                //   decoration: InputDecoration(
+                //     hintText: 'Enter area',
+                //     border: OutlineInputBorder(
+                //       borderRadius: BorderRadius.circular(10),
+                //     ),
+                //   ),
+                // ),
                 // TextButton(
                 //     onPressed: () {
                 //       Navigator.push(
@@ -211,30 +179,9 @@ class _GetUserDetailsState extends State<GetUserDetails> {
                           addressStreetController.text.isEmpty ||
                           addressAreaController.text.isEmpty ||
                           mobileController.text.isEmpty) {
-                        _showToast();
+                        ToastUtil.showToast('Fill the details');
                       } else {
-                        // await users.add({
-                        //   'name': nameController.text,
-                        //   'address': userAddress,
-                        //   'mobile': userMobile,
-                        // }).then((value) {
-                        //   print('success');
-                        // });
-                        // Map<String, dynamic> data = {
-                        //   'name': userName,
-                        //   'address': addressController.text,
-                        //   'mobile': mobileController.text,
-                        // };
-                        // FirebaseFirestore.instance.collection('userdat').add(data);
-                        // saveData();
                         setState(() {
-                          // UserData userDetails = UserData(
-                          //   name: nameController.text,
-                          //   address: addressController.text,
-                          //   mobile: mobileController.text,
-                          //   email: user.email!,
-                          // );
-                          // userDetails.saveUserData();
                           UserData().createUserData(
                               nameController.text,
                               addressNumController.text,
@@ -244,8 +191,7 @@ class _GetUserDetailsState extends State<GetUserDetails> {
                               user.email!);
                         });
                         // UserData().saveUserData();
-
-                        // userDetails = [userName, userAddress, userMobile];
+                        ToastUtil.showToast('Data saved');
                         Navigator.pop(
                           context,
                         );
