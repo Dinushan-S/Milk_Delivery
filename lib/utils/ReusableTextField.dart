@@ -8,6 +8,9 @@ class ReusableTextField extends StatelessWidget {
     required this.onchanged,
     required this.control,
     required this.textInputAction,
+    required this.textLength,
+    required this.validator,
+    required this.keyboardType,
   });
 
   final String hintText;
@@ -15,6 +18,9 @@ class ReusableTextField extends StatelessWidget {
   final IconData textIcon;
   final TextEditingController control;
   final TextInputAction textInputAction;
+  final int textLength;
+  final FormFieldValidator<String>? validator;
+  final TextInputType keyboardType;
   // final FocusNode focus;
 
   @override
@@ -25,21 +31,26 @@ class ReusableTextField extends StatelessWidget {
           color: Colors.black,
         ),
         controller: control,
+        keyboardType: keyboardType,
         textInputAction: textInputAction,
         // focusNode: focus,
         onChanged: onchanged,
         expands: false,
+        maxLength: textLength,
         decoration: InputDecoration(
+          prefixIcon: Icon(textIcon),
           filled: true,
+          counterText: "",
           // fillColor: const Color(0xFFF8F8F8),
           fillColor: Colors.white,
-
-          icon: Icon(textIcon),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
           ),
           hintText: hintText,
-          hintStyle: const TextStyle(color: Colors.grey),
+          hintStyle: const TextStyle(
+            color: Colors.grey,
+            fontFamily: 'Cairo',
+          ),
         ),
       ),
     );

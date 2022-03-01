@@ -1,19 +1,15 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, sized_box_for_whitespace
 
-import 'dart:async';
-import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:milky/screens/login_screen/google_sign_in.dart';
-import 'package:milky/utils/orders_screen/orderpage.dart';
+import 'package:milky/screens/orders_screen/orderpage.dart';
 import 'package:milky/screens/milk_screen/widget/show_toast.dart';
+import 'package:milky/screens/shop_screen/shop_screen.dart';
 import 'package:milky/user_details/userDetails.dart';
-import 'package:milky/utils/getcurrentlocation.dart';
 import 'package:provider/provider.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 import 'widget/get_distance.dart';
 

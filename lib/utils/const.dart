@@ -10,6 +10,26 @@ const textFieldStyle = TextStyle(
   color: Colors.black,
 );
 
+const kModelTextStyle = TextStyle(
+  fontSize: 20.0,
+  fontWeight: FontWeight.bold,
+  color: Colors.black,
+);
+
+final kBlackTextButton = TextButton.styleFrom(
+  primary: Colors.white,
+  backgroundColor: Colors.black,
+  side: const BorderSide(
+    color: Colors.black,
+    // width: 0,
+  ),
+  elevation: 20,
+  minimumSize: Size(double.infinity, 50),
+  shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(10),
+  ),
+);
+
 const textFieldInputDec = InputDecoration(
   filled: true,
   fillColor: Colors.white,

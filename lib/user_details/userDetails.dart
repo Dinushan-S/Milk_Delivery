@@ -2,12 +2,9 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:milky/screens/milk_screen/milk_order.dart';
 import 'package:milky/screens/milk_screen/widget/show_toast.dart';
 import 'package:milky/user_details/get_user_data.dart';
 import 'package:milky/utils/ReusableTextField.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -25,6 +22,7 @@ class _GetUserDetailsState extends State<GetUserDetails> {
   late String userAddressArea;
   late String userMobile;
   late List userDetails;
+  List _detailsTextFieldList = [];
   late final CameraPosition _cameraPosition;
 
   CollectionReference users =
@@ -47,6 +45,116 @@ class _GetUserDetailsState extends State<GetUserDetails> {
     addressStreetController = TextEditingController();
     addressAreaController = TextEditingController();
     mobileController = TextEditingController();
+
+    _detailsTextFieldList = List.unmodifiable([
+      {
+        "controller": nameController,
+        "text_input_action": TextInputAction.next,
+        "hint": 'Enter your name',
+        "icon": Icons.person,
+        "text_length": 20,
+        "text_input_type": TextInputType.text,
+        "onchange": (value) {
+          setState(
+            () {
+              userName = value;
+            },
+          );
+        },
+        "validator": (value) {
+          if (value.isEmpty) {
+            return 'Please enter your name';
+          }
+          return null;
+        },
+      },
+      {
+        "controller": addressNumController,
+        "text_input_action": TextInputAction.next,
+        "hint": 'Enter your address number',
+        "icon": Icons.location_on,
+        "text_length": 50,
+        "text_input_type": TextInputType.text,
+        "onchange": (value) {
+          setState(
+            () {
+              userAddressNum = value;
+            },
+          );
+        },
+        "validator": (value) {
+          if (value.isEmpty) {
+            return 'Please enter your name';
+          }
+          return null;
+        },
+      },
+      {
+        "controller": addressStreetController,
+        "text_input_action": TextInputAction.next,
+        "hint": 'Enter your address street',
+        "icon": Icons.location_on,
+        "text_length": 50,
+        "text_input_type": TextInputType.text,
+        "onchange": (value) {
+          setState(
+            () {
+              userAddressStreet = value;
+            },
+          );
+        },
+        "validator": (value) {
+          if (value.isEmpty) {
+            return 'Please enter your name';
+          }
+          return null;
+        },
+      },
+      {
+        "controller": addressAreaController,
+        "text_input_action": TextInputAction.next,
+        "hint": 'Enter your address area',
+        "icon": Icons.location_on,
+        "text_input_type": TextInputType.text,
+        "text_length": 20,
+        "onchange": (value) {
+          setState(
+            () {
+              userAddressArea = value;
+            },
+          );
+        },
+        "validator": (value) {
+          if (value.isEmpty) {
+            return 'Please enter your name';
+          }
+          return null;
+        },
+      },
+      {
+        "controller": mobileController,
+        "text_input_action": TextInputAction.done,
+        "hint": 'Enter your mobile number',
+        "icon": Icons.phone,
+        "text_input_type": TextInputType.number,
+        "text_length": 10,
+        "onchange": (value) {
+          setState(
+            () {
+              userMobile = value;
+            },
+          );
+        },
+        "validator": (value) {
+          if (value.isEmpty) {
+            return 'Please enter your name';
+          }
+          if (!RegExp(r'^(?:[+0]9)?[0-9]{10}$').hasMatch(value)) {
+            return 'Please enter a valid Mobile Number';
+          }
+        },
+      }
+    ]);
   }
 
   Widget build(BuildContext context) {
@@ -63,108 +171,68 @@ class _GetUserDetailsState extends State<GetUserDetails> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                Image(
-                  image: AssetImage('assets/address.png'),
-                  height: 100,
-                  width: 100,
+                Positioned(
+                  left: 20,
+                  top: 50,
+                  child: Row(
+                    children: [
+                      IconButton(
+                        iconSize: 30.0,
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: const Icon(Icons.arrow_back),
+                      ),
+                    ],
+                  ),
                 ),
-                Text(
-                  'Enter Your Address',
-                  style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black),
-                ),
-                SizedBox(
-                  height: 32,
-                ),
-                ReusableTextField(
-                  control: nameController,
-                  textInputAction: TextInputAction.next,
-                  hintText: 'Enter name',
-                  onchanged: (value) {
-                    userName = value;
-                    // print(userName);
-                  },
-                  textIcon: Icons.person,
-                ),
-                SizedBox(
-                  height: 32,
-                ),
-                ReusableTextField(
-                  control: addressNumController,
-                  textInputAction: TextInputAction.next,
-                  hintText: 'Enter address number',
-                  onchanged: (value) {},
-                  textIcon: Icons.home,
-                ),
-                SizedBox(
-                  height: 32,
-                ),
-                ReusableTextField(
-                  control: addressStreetController,
-                  textInputAction: TextInputAction.next,
-                  hintText: 'Enter street ',
-                  onchanged: (value) {
-                    // userAddress = value;
-                  },
-                  textIcon: Icons.home,
+                Padding(
+                  padding: EdgeInsets.only(bottom: 50),
+                  child: Column(
+                    children: const [
+                      Image(
+                        image: AssetImage('assets/address.png'),
+                        height: 100,
+                        width: 100,
+                      ),
+                      Text(
+                        'Enter Your Details',
+                        style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black),
+                      ),
+                    ],
+                  ),
                 ),
                 SizedBox(
                   height: 32,
                 ),
-                // TextField(
-                //   controller: addressAreaController,
-                //   onTap: () => {},
-                //   decoration: InputDecoration(
-                //     hintText: 'Enter area',
-                //     border: OutlineInputBorder(
-                //       borderRadius: BorderRadius.circular(10),
-                //     ),
-                //   ),
-                // ),
-                // TextButton(
-                //     onPressed: () {
-                //       Navigator.push(
-                //         context,
-                //         MaterialPageRoute(
-                //           builder: (context) => GoogleMap(
-                //             initialCameraPosition: _cameraPosition,
-                //             // onMapCreated: (GoogleMapController controller) {
-                //             //   _controller = (controller);
-                //             //   _controller.animateCamera(
-                //             //       CameraUpdate.newCameraPosition(_cameraPosition));
-                //             // },
-                //             // markers: _markers,
-                //             onCameraIdle: () {
-                //               setState(() {});
-                //             },
-                //           ),
-                //         ),
-                //       );
-                //     },
-                //     child: Text('data')),
-                ReusableTextField(
-                  control: addressAreaController,
-                  textInputAction: TextInputAction.next,
-                  hintText: 'Enter your ',
-                  onchanged: (value) {
-                    // userAddress = value;
-                  },
-                  textIcon: Icons.home,
-                ),
-                SizedBox(
-                  height: 32,
-                ),
-                ReusableTextField(
-                  control: mobileController,
-                  // focus: FocusScopeNode(),
-                  hintText: 'mobile',
-                  textInputAction: TextInputAction.done,
-                  onchanged: (value) {
-                    userMobile = value;
-                  },
-                  textIcon: Icons.phone,
+                Container(
+                  child: Column(
+                    children: List.generate(
+                      _detailsTextFieldList.length,
+                      (index) {
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 20.0),
+                          child: ReusableTextField(
+                            control: _detailsTextFieldList[index]['controller'],
+                            textInputAction: _detailsTextFieldList[index]
+                                ['text_input_action'],
+                            hintText: _detailsTextFieldList[index]['hint'],
+                            textLength: _detailsTextFieldList[index]
+                                ['text_length'],
+                            onchanged: _detailsTextFieldList[index]['onchange'],
+                            textIcon: _detailsTextFieldList[index]['icon'],
+                            validator: _detailsTextFieldList[index]
+                                ['validator'],
+                            keyboardType: _detailsTextFieldList[index]
+                                ['text_input_type'],
+                          ),
+                        );
+                      },
+                    ),
+                  ),
                 ),
                 SizedBox(
                   height: 32,

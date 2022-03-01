@@ -36,6 +36,11 @@ class _CategoryState extends State<Category>
       "title": "Services",
       "route": HomePage(),
     },
+    {
+      "icon": "assets/icon/packagedelivery.svg",
+      "title": "Package Delivery",
+      "route": HomePage(),
+    },
   ]);
   @override
   Widget build(BuildContext context) {
@@ -64,20 +69,27 @@ class _CategoryState extends State<Category>
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SvgPicture.asset(
-                    categories[index]['icon'],
-                    width: 50,
-                    height: 50,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    categories[index]['title'],
-                    style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        categories[index]['icon'],
+                        width: 50,
+                        height: 50,
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      Text(
+                        categories[index]['title'],
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -91,14 +103,5 @@ class _CategoryState extends State<Category>
         ),
       ),
     );
-    // Container(
-    //   height: MediaQuery.of(context).size.height * 0.3,
-    //   width: double.infinity,
-    //   child: Column(
-    //     children: [
-    //       CategoryList(),
-    //     ],
-    //   ),
-    // );
   }
 }

@@ -12,6 +12,8 @@ class UserLogin extends StatefulWidget {
 }
 
 class _UserLoginState extends State<UserLogin> {
+  bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,21 +50,51 @@ class _UserLoginState extends State<UserLogin> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                icon: Image(
-                  image: AssetImage('assets/google_logo.png'),
-                  width: 30,
-                  height: 30,
-                ),
+                icon: isLoading
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: const [
+                          Image(
+                            image: AssetImage('assets/google_logo.png'),
+                            width: 30,
+                            height: 30,
+                          ),
+                        ],
+                      )
+                    : Image(
+                        image: AssetImage('assets/google_logo.png'),
+                        width: 30,
+                        height: 30,
+                      ),
                 // icon: FaIcon(
                 //   FontAwesomeIcons.google,
                 //   color: Colors.white,
                 // ),
-                onPressed: () {
+                label: isLoading
+                    ? Row(
+                        children: const [
+                          CircularProgressIndicator(color: Colors.white),
+                          Text(
+                            'Signing in...',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Colors.black),
+                          )
+                        ],
+                      )
+                    : Text('Sign in with Google',
+                        style: TextStyle(color: Colors.black)),
+                onPressed: () async {
+                  if (isLoading) return;
+                  setState(() => isLoading = true);
                   final provider =
                       Provider.of<GoogleSigninProvider>(context, listen: false);
                   provider.googleLogin();
+                  await Future.delayed(Duration(seconds: 3), () {
+                    setState(() => isLoading = false);
+                  });
+                  // setState(() => isLoading = false);
                 },
-                label: Text('SignIn with google'),
               ),
             ],
           ),

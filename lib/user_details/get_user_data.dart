@@ -5,17 +5,7 @@ class UserData {
   CollectionReference users =
       FirebaseFirestore.instance.collection('usersdata');
 
-  // UserData(
-  //     {required this.name,
-  //     required this.address,
-  //     required this.mobile,
-  //     required this.email});
-
   final user = FirebaseAuth.instance.currentUser!;
-  // final String name;
-  // final String address;
-  // final String mobile;
-  // final String email;
 
   @override
   void initState() {
