@@ -39,12 +39,12 @@ class GoogleSigninProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: LoadingAnimationWidget.inkDrop(
-        color: Colors.white,
-        size: 75,
-      ),
-    );
-  }
+  // Widget build(BuildContext context) {
+  //   return Scaffold(
+  //     body: LoadingAnimationWidget.inkDrop(
+  //       color: Colors.white,
+  //       size: 75,
+  //     ),
+  //   );
+  // }
 }

@@ -3,11 +3,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:milky/screens/home/home_page.dart';
+import 'package:milky/screens/home_page/router_page.dart';
 import 'package:milky/screens/milk_screen/milk_order.dart';
 import 'package:milky/screens/shop_screen/shop_screen.dart';
 import 'package:milky/utils/const.dart';
 
-class OrderConformationModel extends StatelessWidget {
+class OrderConformationModel extends StatefulWidget {
   const OrderConformationModel({
     Key? key,
     required this.milk,
@@ -19,6 +20,11 @@ class OrderConformationModel extends StatelessWidget {
   final int milkPrice;
   final int dis;
 
+  @override
+  State<OrderConformationModel> createState() => _OrderConformationModelState();
+}
+
+class _OrderConformationModelState extends State<OrderConformationModel> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -48,11 +54,12 @@ class OrderConformationModel extends StatelessWidget {
                     width: 20,
                   ),
                   Expanded(
-                    child: Text('$milk liter milk', style: kModelTextStyle),
+                    child: Text('${widget.milk} liter milk',
+                        style: kModelTextStyle),
                   ),
                   Expanded(
                     child: Text(
-                      'Rs.$milkPrice',
+                      'Rs.${widget.milkPrice}',
                       style: kModelTextStyle,
                     ),
                   ),
@@ -71,7 +78,7 @@ class OrderConformationModel extends StatelessWidget {
                   style: kModelTextStyle,
                 ),
                 Text(
-                  'Rs.$milkPrice',
+                  'Rs.${widget.milkPrice}',
                   style: kModelTextStyle,
                 ),
               ],
@@ -90,12 +97,12 @@ class OrderConformationModel extends StatelessWidget {
                         "https://milk-delivery-3a454-default-rtdb.asia-southeast1.firebasedatabase.app/")
                 .ref();
 
-            final root = FirebaseDatabase.instance.refFromURL(
-                "https://milk-delivery-3a454-default-rtdb.asia-southeast1.firebasedatabase.app/");
+            // final root = FirebaseDatabase.instance.refFromURL(
+            //     "https://milk-delivery-3a454-default-rtdb.asia-southeast1.firebasedatabase.app/");
             // .child("/order");
 
-            CollectionReference collection =
-                FirebaseFirestore.instance.collection('orderdata');
+            // CollectionReference collection =
+            //     FirebaseFirestore.instance.collection('orderdata');
             try {
               // await collection.doc(user.uid).set(
               //   {
@@ -109,24 +116,31 @@ class OrderConformationModel extends StatelessWidget {
 
               await db.child('orders').push().set({
                 'user_mail': user.email,
-                'milkUnit': milk,
-                'sub_price': milkPrice,
-                'distance': dis,
+                'milkUnit': widget.milk,
+                'sub_price': widget.milkPrice,
+                'distance': widget.dis,
                 'shipping_cost': 100,
                 'total-amount': 200,
-              }).then((value) => print('done'));
+              }).then(
+                (value) => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => RouterPage(),
+                  ),
+                ),
+              );
             } catch (e) {
               print("not work");
             }
 
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) {
-                  return HomePage();
-                },
-              ),
-            );
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(
+            //     builder: (context) {
+            //       return HomePage();
+            //     },
+            //   ),
+            // );
           },
         )
       ],

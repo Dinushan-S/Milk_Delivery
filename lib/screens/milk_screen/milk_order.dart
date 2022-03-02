@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:milky/screens/login_screen/google_sign_in.dart';
+import 'package:milky/screens/login_screen/widget/google_sign_in.dart';
 import 'package:milky/screens/orders_screen/orderpage.dart';
 import 'package:milky/screens/milk_screen/widget/show_toast.dart';
 import 'package:milky/screens/shop_screen/shop_screen.dart';
@@ -134,14 +134,6 @@ class _MilkOrderState extends State<MilkOrder> {
                   const SizedBox(
                     height: 10,
                   ),
-                  TextButton(
-                      onPressed: () {
-                        final provider = Provider.of<GoogleSigninProvider>(
-                            context,
-                            listen: false);
-                        provider.Logout();
-                      },
-                      child: Text('logout')),
                   Row(
                     children: [
                       Text(

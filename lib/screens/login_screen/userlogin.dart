@@ -2,8 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:milky/screens/login_screen/google_sign_in.dart';
+import 'package:milky/screens/login_screen/widget/google_sign_in.dart';
+import 'package:milky/screens/login_screen/widget/login_controller.dart';
 import 'package:provider/provider.dart';
 
 class UserLogin extends StatefulWidget {
@@ -14,6 +17,7 @@ class UserLogin extends StatefulWidget {
 class _UserLoginState extends State<UserLogin> {
   bool isLoading = false;
 
+  final controller = Get.put(LoginController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,6 +77,7 @@ class _UserLoginState extends State<UserLogin> {
                 // ),
                 label: isLoading
                     ? Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: const [
                           CircularProgressIndicator(color: Colors.white),
                           Text(
@@ -82,17 +87,21 @@ class _UserLoginState extends State<UserLogin> {
                           )
                         ],
                       )
-                    : Text('Sign in with Google',
-                        style: TextStyle(color: Colors.black)),
+                    : Text(
+                        'Sign in with Google',
+                        style: TextStyle(color: Colors.black),
+                      ),
                 onPressed: () async {
+                  // GoogleSignIn().signIn();
+
                   if (isLoading) return;
                   setState(() => isLoading = true);
                   final provider =
                       Provider.of<GoogleSigninProvider>(context, listen: false);
                   provider.googleLogin();
-                  await Future.delayed(Duration(seconds: 3), () {
-                    setState(() => isLoading = false);
-                  });
+                  await Future.delayed(
+                    Duration(seconds: 2),
+                  );
                   // setState(() => isLoading = false);
                 },
               ),

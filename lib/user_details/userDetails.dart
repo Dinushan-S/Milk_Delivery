@@ -208,30 +208,27 @@ class _GetUserDetailsState extends State<GetUserDetails> {
                 SizedBox(
                   height: 32,
                 ),
-                Container(
-                  child: Column(
-                    children: List.generate(
-                      _detailsTextFieldList.length,
-                      (index) {
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 20.0),
-                          child: ReusableTextField(
-                            control: _detailsTextFieldList[index]['controller'],
-                            textInputAction: _detailsTextFieldList[index]
-                                ['text_input_action'],
-                            hintText: _detailsTextFieldList[index]['hint'],
-                            textLength: _detailsTextFieldList[index]
-                                ['text_length'],
-                            onchanged: _detailsTextFieldList[index]['onchange'],
-                            textIcon: _detailsTextFieldList[index]['icon'],
-                            validator: _detailsTextFieldList[index]
-                                ['validator'],
-                            keyboardType: _detailsTextFieldList[index]
-                                ['text_input_type'],
-                          ),
-                        );
-                      },
-                    ),
+                Column(
+                  children: List.generate(
+                    _detailsTextFieldList.length,
+                    (index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 20.0),
+                        child: ReusableTextField(
+                          control: _detailsTextFieldList[index]['controller'],
+                          textInputAction: _detailsTextFieldList[index]
+                              ['text_input_action'],
+                          hintText: _detailsTextFieldList[index]['hint'],
+                          textLength: _detailsTextFieldList[index]
+                              ['text_length'],
+                          onchanged: _detailsTextFieldList[index]['onchange'],
+                          textIcon: _detailsTextFieldList[index]['icon'],
+                          validator: _detailsTextFieldList[index]['validator'],
+                          keyboardType: _detailsTextFieldList[index]
+                              ['text_input_type'],
+                        ),
+                      );
+                    },
                   ),
                 ),
                 SizedBox(

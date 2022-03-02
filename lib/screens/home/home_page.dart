@@ -1,7 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:milky/cart_screen/cart_page.dart';
 import 'package:milky/screens/home/widgets/nav_bar.dart';
 import 'package:milky/screens/shop_screen/shop_screen.dart';
+import 'package:milky/screens/user_profile/profile_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -19,8 +22,8 @@ class _HomePageState extends State<HomePage> {
 
   final List<Widget> _tabs = List.unmodifiable([
     ShopScreen(),
-    Container(),
-    Container(),
+    CartPage(),
+    UserProfilePage(),
   ]);
 
   //handle tab change
@@ -32,6 +35,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // final user = FirebaseAuth.instance.currentUser!;
+
     return Scaffold(
       body: _tabs[currentIndex],
       bottomNavigationBar: Navbar(

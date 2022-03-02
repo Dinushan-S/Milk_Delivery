@@ -10,7 +10,7 @@ class ShopScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     MQuery().init(context);
     return SafeArea(
-      child: Container(
+      child: SizedBox(
         width: double.infinity,
         child: SingleChildScrollView(
           padding: const EdgeInsets.only(top: 20),

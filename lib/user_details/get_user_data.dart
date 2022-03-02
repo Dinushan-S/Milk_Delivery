@@ -13,12 +13,13 @@ class UserData {
   }
 
   Future<void> createUserData(
-      String name,
-      String addressNum,
-      String addressStreet,
-      String addressArea,
-      String mobile,
-      String email) async {
+    String name,
+    String addressNum,
+    String addressStreet,
+    String addressArea,
+    String mobile,
+    String email,
+  ) async {
     return await users.doc(user.uid).set({
       'name': name,
       'addressNum': addressNum,
@@ -50,6 +51,15 @@ class UserData {
       return itemList;
     } catch (e) {
       print(e);
+    }
+  }
+
+  Future logOut() async {
+    try {
+      return await FirebaseAuth.instance.signOut();
+    } catch (e) {
+      print(e.toString());
+      return null;
     }
   }
 }
