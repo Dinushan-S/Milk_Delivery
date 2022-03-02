@@ -26,19 +26,19 @@ class _MilkOrderState extends State<MilkOrder> {
   getRange(String value) {
     if (value == 'min') {
       if (length == 0) {
-        print(length);
+        // print(length);
         length = 0;
       } else {
-        print(length);
+        // print(length);
         length--;
       }
     } else if (value == 'max') {
       if (length == 3) {
         length = 3;
-        print(length);
+        // print(length);
       } else {
         length++;
-        print(length);
+        // print(length);
       }
     }
   }
@@ -69,8 +69,8 @@ class _MilkOrderState extends State<MilkOrder> {
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser!;
     return Scaffold(
-      body: SafeArea(
-        child: Stack(children: [
+      body: Stack(
+        children: [
           Positioned(
             left: 0,
             right: 0,
@@ -195,108 +195,106 @@ class _MilkOrderState extends State<MilkOrder> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Positioned(
-                child: Container(
-                  padding:
-                      const EdgeInsets.only(left: 20, right: 20.0, top: 15.0),
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    color: Color(0xFFF0F3FC),
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(30),
-                      topRight: Radius.circular(30),
-                    ),
+              Container(
+                padding:
+                    const EdgeInsets.only(left: 20, right: 20.0, top: 15.0),
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  color: Color(0xFFF0F3FC),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        children: [
-                          Text(
-                            'Total',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 30.0,
-                              color: Colors.black,
-                            ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      children: [
+                        Text(
+                          'Total',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 30.0,
+                            color: Colors.black,
                           ),
-                          Text(
-                            price().toString(),
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20.0,
-                              color: Colors.green,
-                            ),
+                        ),
+                        Text(
+                          price().toString(),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20.0,
+                            color: Colors.green,
                           ),
-                        ],
-                      ),
-                      TextButton(
-                        onPressed: () async {
-                          DocumentSnapshot docRef = await FirebaseFirestore
-                              .instance
-                              .collection('usersdata')
-                              .doc(user.uid)
-                              .get();
+                        ),
+                      ],
+                    ),
+                    TextButton(
+                      onPressed: () async {
+                        DocumentSnapshot docRef = await FirebaseFirestore
+                            .instance
+                            .collection('usersdata')
+                            .doc(user.uid)
+                            .get();
 
-                          // docRef.get().then((value) async {
-                          if (docRef.exists) {
-                            print('exists');
-                            print('order somthing');
-                            if (docRef['status'] == 'active')
-                              print('user name is ${docRef['name']}');
-                            print('user email is ${docRef['email']}');
-                            if (length > 0) {
-                              await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) {
-                                    return OrderPage(
-                                      variable: docRef,
-                                      count: milkCount[length],
-                                      price: price(),
-                                      distance: distance,
-                                    );
-                                  },
-                                ),
-                              );
-                            } else {
-                              // showToast msg
-                              ToastUtil.showToast('please add a item');
-                            }
-                          } else {
-                            Navigator.push(
+                        // docRef.get().then((value) async {
+                        if (docRef.exists) {
+                          // print('exists');
+                          // print('order somthing');
+                          if (docRef['status'] == 'active')
+                          // print('user name is ${docRef['name']}');
+                          // print('user email is ${docRef['email']}');
+                          if (length > 0) {
+                            await Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) {
-                                  return GetUserDetails();
+                                  return OrderPage(
+                                    variable: docRef,
+                                    count: milkCount[length],
+                                    price: price(),
+                                    distance: distance,
+                                  );
                                 },
                               ),
                             );
+                          } else {
+                            // showToast msg
+                            ToastUtil.showToast('please add a item');
                           }
+                        } else {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return GetUserDetails();
+                              },
+                            ),
+                          );
+                        }
 
-                          // DocumentSnapshot variable = await FirebaseFirestore
-                          //     .instance
-                          //     .collection('usersdata')
-                          //     .doc(user.uid)
-                          //     .get();
+                        // DocumentSnapshot variable = await FirebaseFirestore
+                        //     .instance
+                        //     .collection('usersdata')
+                        //     .doc(user.uid)
+                        //     .get();
 
-                          // print(variable['status']);
-                          setState(() {});
-                        },
-                        child: Text('Checkout'),
-                        style: ButtonStyle(
-                            foregroundColor:
-                                MaterialStateProperty.all(Colors.white),
-                            backgroundColor:
-                                MaterialStateProperty.all(Color(0xFFFF456E))),
-                      )
-                    ],
-                  ),
+                        // print(variable['status']);
+                        setState(() {});
+                      },
+                      child: Text('Checkout'),
+                      style: ButtonStyle(
+                          foregroundColor:
+                              MaterialStateProperty.all(Colors.white),
+                          backgroundColor:
+                              MaterialStateProperty.all(Color(0xFFFF456E))),
+                    )
+                  ],
                 ),
               ),
             ],
           ),
-        ]),
+        ],
       ),
     );
   }
