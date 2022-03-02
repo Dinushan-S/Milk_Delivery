@@ -23,7 +23,7 @@ class _GetUserDetailsState extends State<GetUserDetails> {
   late String userMobile;
   late List userDetails;
   List _detailsTextFieldList = [];
-  late final CameraPosition _cameraPosition;
+  // late final CameraPosition _cameraPosition;
 
   CollectionReference users =
       FirebaseFirestore.instance.collection('usersdata');
@@ -38,7 +38,7 @@ class _GetUserDetailsState extends State<GetUserDetails> {
   void initState() {
     super.initState();
 
-    _cameraPosition = CameraPosition(target: LatLng(0, 0), zoom: 10.0);
+    // _cameraPosition = CameraPosition(target: LatLng(0, 0), zoom: 10.0);
 
     nameController = TextEditingController();
     addressNumController = TextEditingController();
@@ -157,6 +157,7 @@ class _GetUserDetailsState extends State<GetUserDetails> {
     ]);
   }
 
+  @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser!;
 
@@ -171,20 +172,16 @@ class _GetUserDetailsState extends State<GetUserDetails> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                Positioned(
-                  left: 20,
-                  top: 50,
-                  child: Row(
-                    children: [
-                      IconButton(
-                        iconSize: 30.0,
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: const Icon(Icons.arrow_back),
-                      ),
-                    ],
-                  ),
+                Row(
+                  children: [
+                    IconButton(
+                      iconSize: 30.0,
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: const Icon(Icons.arrow_back),
+                    ),
+                  ],
                 ),
                 Padding(
                   padding: EdgeInsets.only(bottom: 50),
